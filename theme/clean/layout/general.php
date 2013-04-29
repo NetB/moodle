@@ -1,3 +1,4 @@
+<?php include('vars.php'); ?>
 <?php echo $OUTPUT->doctype() ?>
 <html <?php echo $OUTPUT->htmlattributes() ?>>
 <head>
@@ -11,7 +12,7 @@
 
 <?php echo $OUTPUT->standard_top_of_body_html() ?>
 
-<header role="banner" class="navbar <?php echo $navbar_inverse ?> navbar-fixed-top">
+<header role="banner" class="navbar navbar-fixed-top">
     <nav role="navigation" class="navbar-inner">
         <div class="container-fluid">
             <a class="brand" href="<?php echo $CFG->wwwroot;?>"><?php echo $SITE->shortname; ?></a>
@@ -41,8 +42,8 @@
         <nav class="breadcrumb-button"><?php echo $PAGE->button; ?></nav>
         <?php echo $OUTPUT->navbar(); ?>
     <?php } ?>
-
-        <?php
+    
+    <?php
     if (!$haslogo) { ?>
         <h1><?php echo $PAGE->heading ?></h1>
         <?php
@@ -62,13 +63,13 @@
 <?php if ($layout === 'pre-and-post') { ?>
     <div id="region-bs-main-and-pre" class="span9">
     <div class="row-fluid">
-    <section id="region-main" class="span8 pull-right">
+    <section id="region-bs-main" class="span8 pull-right">
 <?php } else if ($layout === 'side-post-only') { ?>
-    <section id="region-main" class="span9">
+    <section id="region-bs-main" class="span9">
 <?php } else if ($layout === 'side-pre-only') { ?>
-    <section id="region-main" class="span9 pull-right">
+    <section id="region-bs-main" class="span9 pull-right">
 <?php } else if ($layout === 'content-only') { ?>
-    <section id="region-main" class="span12">
+    <section id="region-bs-main" class="span12">
 <?php } ?>
 
 
@@ -80,37 +81,19 @@
 
 <?php if ($layout !== 'content-only') {
           if ($layout === 'pre-and-post') { ?>
-            <aside class="span4 desktop-first-column">
+            <aside id="region-pre" class="span4 block-region desktop-first-column region-content">
     <?php } else if ($layout === 'side-pre-only') { ?>
-            <aside class="span3 desktop-first-column">
+            <aside id="region-pre" class="span3 block-region desktop-first-column region-content">
     <?php } ?>
-          <div id="region-pre" class="block-region">
-          <div class="region-content">
-          <?php
-                if (!right_to_left()) {
-                    echo $OUTPUT->blocks_for_region('side-pre');
-                } else if ($hassidepost) {
-                    echo $OUTPUT->blocks_for_region('side-post');
-                }
-          ?>
-          </div>
-          </div>
-          </aside>
+          <?php echo $side_pre; ?>
+            </aside>
     <?php if ($layout === 'pre-and-post') {
           ?></div></div><?php // Close row-fluid and span9.
    }
 
     if ($layout === 'side-post-only' OR $layout === 'pre-and-post') { ?>
-        <aside class="span3">
-        <div id="region-post" class="block-region">
-        <div class="region-content">
-        <?php if (!right_to_left()) {
-                  echo $OUTPUT->blocks_for_region('side-post');
-              } else {
-                  echo $OUTPUT->blocks_for_region('side-pre');
-              } ?>
-        </div>
-        </div>
+        <aside id="region-post" class="span3 block-region region-content">
+        <?php echo $side_post; ?>
         </aside>
     <?php } ?>
 <?php } ?>
@@ -118,15 +101,7 @@
 
 <footer id="page-footer">
     <p class="helplink"><?php echo page_doc_link(get_string('moodledocslink')) ?></p>
-
-    <?php
-if ($hasfootnote) { ?>
-   <div class="footnote text-center">
-   <?php echo $PAGE->theme->settings->footnote; ?>
-   </div>
-    <?php
-} ?>
-
+    <?php echo $OUTPUT->login_info(); ?>
     <?php echo $OUTPUT->standard_footer_html(); ?>
 </footer>
 

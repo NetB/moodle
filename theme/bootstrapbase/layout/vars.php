@@ -14,6 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Moodle's Simple theme, an example of how to make a Bootstrap theme
+ *
+ * DO NOT MODIFY THIS THEME!
+ * COPY IT FIRST, THEN RENAME THE COPY AND MODIFY IT INSTEAD.
+ *
+ * For full information about creating Moodle themes, see:
+ * http://docs.moodle.org/dev/Themes_2.0
+ *
+ * @package   theme_clean
+ * @copyright 2013 Moodle, moodle.org
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+ 
 $hasheading = ($PAGE->heading);
 $hasnavbar = (empty($PAGE->layout_options['nonavbar']) && $PAGE->has_navbar());
 $hasfooter = (empty($PAGE->layout_options['nofooter']));
@@ -26,11 +40,11 @@ $showsidepre = ($hassidepre && !$PAGE->blocks->region_completely_docked('side-pr
 $showsidepost = ($hassidepost && !$PAGE->blocks->region_completely_docked('side-post', $OUTPUT));
 
 /* Order pre/post block regions for left to right. */
-$side_pre = $OUTPUT->blocks_for_region('side-pre');
-$side_post = $OUTPUT->blocks_for_region('side-post');
+if ($hassidepre) { 	$side_pre = $OUTPUT->blocks_for_region('side-pre'); }
+if($hassidepost) { $side_post = $OUTPUT->blocks_for_region('side-post'); }
 if (right_to_left()) {
-	$side_pre = $OUTPUT->blocks_for_region('side-post');
-	$side_post = $OUTPUT->blocks_for_region('side-pre');
+	if($hassidepost) { $side_pre = $OUTPUT->blocks_for_region('side-post');}
+	if ($hassidepre) { $side_post = $OUTPUT->blocks_for_region('side-pre'); }
 }
 
 $custommenu = $OUTPUT->custom_menu();

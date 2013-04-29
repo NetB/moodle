@@ -32,6 +32,7 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
 
+/*
     // Invert Navbar to dark background.
     $name = 'theme_clean/invert';
     $title = get_string('invert', 'theme_clean');
@@ -39,8 +40,22 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $settings->add($setting);
+*/
 
-    // Logo file setting.
+
+    
+     // Layout setting.
+    $name = 'theme_clean/layout';
+    $title = get_string('layout', 'theme_clean');
+    $description = get_string('layoutdesc', 'theme_clean');
+    $default = 200;
+    $choices = array(pre_and_post=>'pre-and-post', pre_only=>'pre-only', post_only=>'post-only');
+    $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $settings->add($setting);
+    
+    
+        // Logo file setting.
     $name = 'theme_clean/logo';
     $title = get_string('logo','theme_clean');
     $description = get_string('logodesc', 'theme_clean');

@@ -33,9 +33,9 @@ $string['choosereadme'] = '
 <p>Clean is a modified Moodle bootstrap theme which inherits styles and renderers from its parent theme.</p>
 <h3>Parents</h3>
 <p>This theme is based upon the Bootstrap theme, which was created for Moodle 2.5, with the help of:<br>
-Stuart Lamour, Mark Aberdour, Paul Hibbitts, Mary Evans.</p>
+Mark Aberdour, Paul Hibbitts, Mary Evans.</p>
 <h3>Theme Credits</h3>
-<p>Authors: Bas Brands, David Scotson, Mary Evans<br>
+<p>Authors: Bas Brands, David Scotson, Stuart Lamour, Mary Evans<br>
 Contact: bas@sonsbeekmedia.nl<br>
 Website: <a href="http://www.basbrands.nl">www.basbrands.nl</a>
 </p>
@@ -55,6 +55,10 @@ $string['footnotedesc'] = 'Whatever you add to this textarea will be displayed i
 
 $string['invert'] = 'Invert navbar';
 $string['invertdesc'] = 'Swaps text and background for the navbar at the top of the page between black and white.';
+
+
+$string['layout'] = 'Select layout';
+$string['layoutdesc'] = 'Select a layout for your site.';
 
 $string['logo'] = 'Logo';
 $string['logodesc'] = 'Please upload your custom logo here if you want to add it to the header.<br>

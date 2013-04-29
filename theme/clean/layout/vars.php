@@ -40,25 +40,11 @@ $showsidepre = ($hassidepre && !$PAGE->blocks->region_completely_docked('side-pr
 $showsidepost = ($hassidepost && !$PAGE->blocks->region_completely_docked('side-post', $OUTPUT));
 
 /* Order pre/post block regions for left to right. */
-$side_pre = $OUTPUT->blocks_for_region('side-pre');
-$side_post = $OUTPUT->blocks_for_region('side-post');
+if ($hassidepre) { 	$side_pre = $OUTPUT->blocks_for_region('side-pre'); }
+if($hassidepost) { $side_post = $OUTPUT->blocks_for_region('side-post'); }
 if (right_to_left()) {
-	$side_pre = $OUTPUT->blocks_for_region('side-post');
-	$side_post = $OUTPUT->blocks_for_region('side-pre');
-}
-
-$custommenu = $OUTPUT->custom_menu();
-$hascustommenu = (empty($PAGE->layout_options['nocustommenu']) && !empty($custommenu));
-
-$courseheader = $coursecontentheader = $coursecontentfooter = $coursefooter = '';
-
-if (empty($PAGE->layout_options['nocourseheaderfooter'])) {
-    $courseheader = $OUTPUT->course_header();
-    $coursecontentheader = $OUTPUT->course_content_header();
-    if (empty($PAGE->layout_options['nocoursefooter'])) {
-        $coursecontentfooter = $OUTPUT->course_content_footer();
-        $coursefooter = $OUTPUT->course_footer();
-    }
+	if($hassidepost) { $side_pre = $OUTPUT->blocks_for_region('side-post');}
+	if ($hassidepre) { $side_post = $OUTPUT->blocks_for_region('side-pre'); }
 }
 
 $layout = 'pre-and-post';
@@ -79,5 +65,24 @@ if ($showsidepre && !$showsidepost) {
 }
 $bodyclasses[] = $layout;
 
+$haslogo = (!empty($PAGE->theme->settings->logo));
 
+$settingsLayout = ($PAGE->theme->settings->layout);
+
+$custommenu = $OUTPUT->custom_menu();
+$hascustommenu = (empty($PAGE->layout_options['nocustommenu']) && !empty($custommenu));
+
+$courseheader = $coursecontentheader = $coursecontentfooter = $coursefooter = '';
+
+if (empty($PAGE->layout_options['nocourseheaderfooter'])) {
+    $courseheader = $OUTPUT->course_header();
+    $coursecontentheader = $OUTPUT->course_content_header();
+    if (empty($PAGE->layout_options['nocoursefooter'])) {
+        $coursecontentfooter = $OUTPUT->course_content_footer();
+        $coursefooter = $OUTPUT->course_footer();
+    }
+}
+
+
+echo "hello! ".$settingsLayout;
 ?>

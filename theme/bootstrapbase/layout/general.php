@@ -1,63 +1,6 @@
-<?php
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+<?php include('vars.php'); ?>
 
-$hasheading = ($PAGE->heading);
-$hasnavbar = (empty($PAGE->layout_options['nonavbar']) && $PAGE->has_navbar());
-$hasfooter = (empty($PAGE->layout_options['nofooter']));
-$hasheader = (empty($PAGE->layout_options['noheader']));
-
-$hassidepre = (empty($PAGE->layout_options['noblocks']) && $PAGE->blocks->region_has_content('side-pre', $OUTPUT));
-$hassidepost = (empty($PAGE->layout_options['noblocks']) && $PAGE->blocks->region_has_content('side-post', $OUTPUT));
-
-$showsidepre = ($hassidepre && !$PAGE->blocks->region_completely_docked('side-pre', $OUTPUT));
-$showsidepost = ($hassidepost && !$PAGE->blocks->region_completely_docked('side-post', $OUTPUT));
-
-$custommenu = $OUTPUT->custom_menu();
-$hascustommenu = (empty($PAGE->layout_options['nocustommenu']) && !empty($custommenu));
-
-$courseheader = $coursecontentheader = $coursecontentfooter = $coursefooter = '';
-
-if (empty($PAGE->layout_options['nocourseheaderfooter'])) {
-    $courseheader = $OUTPUT->course_header();
-    $coursecontentheader = $OUTPUT->course_content_header();
-    if (empty($PAGE->layout_options['nocoursefooter'])) {
-        $coursecontentfooter = $OUTPUT->course_content_footer();
-        $coursefooter = $OUTPUT->course_footer();
-    }
-}
-
-$layout = 'pre-and-post';
-if ($showsidepre && !$showsidepost) {
-    if (!right_to_left()) {
-        $layout = 'side-pre-only';
-    } else {
-        $layout = 'side-post-only';
-    }
-} else if ($showsidepost && !$showsidepre) {
-    if (!right_to_left()) {
-        $layout = 'side-post-only';
-    } else {
-        $layout = 'side-pre-only';
-    }
-} else if (!$showsidepost && !$showsidepre) {
-    $layout = 'content-only';
-}
-$bodyclasses[] = $layout;
-
-echo $OUTPUT->doctype() ?>
+<?php echo $OUTPUT->doctype() ?>
 <html <?php echo $OUTPUT->htmlattributes() ?>>
 <head>
     <title><?php echo $PAGE->title ?></title>
@@ -131,36 +74,19 @@ echo $OUTPUT->doctype() ?>
 
 <?php if ($layout !== 'content-only') {
           if ($layout === 'pre-and-post') { ?>
-            <aside class="span4 desktop-first-column">
+            <aside id="region-pre" class="span4 desktop-first-column block-region region-content">
     <?php } else if ($layout === 'side-pre-only') { ?>
-            <aside class="span3 desktop-first-column">
+            <aside id="region-pre" class="span3 desktop-first-column block-region region-content">
     <?php } ?>
-          <div id="region-pre" class="block-region">
-          <div class="region-content">
-          <?php
-                if (!right_to_left()) {
-                    echo $OUTPUT->blocks_for_region('side-pre');
-                } else if ($hassidepost) {
-                    echo $OUTPUT->blocks_for_region('side-post');
-                } ?>
-          </div>
-          </div>
+          <?php echo $side_pre; ?>
           </aside>
     <?php if ($layout === 'pre-and-post') {
           ?></div></div><?php // Close row-fluid and span9.
    }
 
     if ($layout === 'side-post-only' OR $layout === 'pre-and-post') { ?>
-        <aside class="span3">
-        <div id="region-post" class="block-region">
-        <div class="region-content">
-        <?php if (!right_to_left()) {
-                  echo $OUTPUT->blocks_for_region('side-post');
-              } else {
-                  echo $OUTPUT->blocks_for_region('side-pre');
-              } ?>
-        </div>
-        </div>
+        <aside id="region-post" class="span3 block-region region-content">
+        <?php echo $side_post; ?>
         </aside>
     <?php } ?>
 <?php } ?>

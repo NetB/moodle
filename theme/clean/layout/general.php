@@ -67,9 +67,6 @@
 </footer>
 
 <?php echo $OUTPUT->standard_end_of_body_html() ?>
-<script>
-var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-</script>
 </div>
 </body>
 </html>

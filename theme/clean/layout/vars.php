@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Moodle's Simple theme, an example of how to make a Bootstrap theme
+ * Moodle's clean theme, an example of how to make a Bootstrap theme
  *
  * DO NOT MODIFY THIS THEME!
  * COPY IT FIRST, THEN RENAME THE COPY AND MODIFY IT INSTEAD.
@@ -33,14 +33,32 @@ $hasnavbar = (empty($PAGE->layout_options['nonavbar']) && $PAGE->has_navbar());
 $hasfooter = (empty($PAGE->layout_options['nofooter']));
 $hasheader = (empty($PAGE->layout_options['noheader']));
 
-$hassidepre = (empty($PAGE->layout_options['noblocks']) && $PAGE->blocks->region_has_content('side-pre', $OUTPUT));
-$hassidepost = (empty($PAGE->layout_options['noblocks']) && $PAGE->blocks->region_has_content('side-post', $OUTPUT));
+$custommenu = $OUTPUT->custom_menu();
+$hascustommenu = (empty($PAGE->layout_options['nocustommenu']) && !empty($custommenu));
 
-$showsidepre = ($hassidepre && !$PAGE->blocks->region_completely_docked('side-pre', $OUTPUT));
-$showsidepost = ($hassidepost && !$PAGE->blocks->region_completely_docked('side-post', $OUTPUT));
+$courseheader = $coursecontentheader = $coursecontentfooter = $coursefooter = '';
+
+if (empty($PAGE->layout_options['nocourseheaderfooter'])) {
+    $courseheader = $OUTPUT->course_header();
+    $coursecontentheader = $OUTPUT->course_content_header();
+    if (empty($PAGE->layout_options['nocoursefooter'])) {
+        $coursecontentfooter = $OUTPUT->course_content_footer();
+        $coursefooter = $OUTPUT->course_footer();
+    }
+}
+
+$haslogo = (!empty($PAGE->theme->settings->logo));
+
+$settingsLayout = ($PAGE->theme->settings->layout);
+
+$hassidepre = ($PAGE->blocks->region_has_content('side-pre', $OUTPUT));
+$hassidepost = ($PAGE->blocks->region_has_content('side-post', $OUTPUT));
+
+$showsidepre = ($hassidepre);
+$showsidepost = ($hassidepost);
 
 /* Order pre/post block regions for left to right. */
-if ($hassidepre) { 	$side_pre = $OUTPUT->blocks_for_region('side-pre'); }
+if ($hassidepre) { $side_pre = $OUTPUT->blocks_for_region('side-pre'); }
 if($hassidepost) { $side_post = $OUTPUT->blocks_for_region('side-post'); }
 if (right_to_left()) {
 	if($hassidepost) { $side_pre = $OUTPUT->blocks_for_region('side-post');}
@@ -65,24 +83,6 @@ if ($showsidepre && !$showsidepost) {
 }
 $bodyclasses[] = $layout;
 
-$haslogo = (!empty($PAGE->theme->settings->logo));
+$editing = strstr($PAGE->bodyclasses, 'editing');
 
-$settingsLayout = ($PAGE->theme->settings->layout);
-
-$custommenu = $OUTPUT->custom_menu();
-$hascustommenu = (empty($PAGE->layout_options['nocustommenu']) && !empty($custommenu));
-
-$courseheader = $coursecontentheader = $coursecontentfooter = $coursefooter = '';
-
-if (empty($PAGE->layout_options['nocourseheaderfooter'])) {
-    $courseheader = $OUTPUT->course_header();
-    $coursecontentheader = $OUTPUT->course_content_header();
-    if (empty($PAGE->layout_options['nocoursefooter'])) {
-        $coursecontentfooter = $OUTPUT->course_content_footer();
-        $coursefooter = $OUTPUT->course_footer();
-    }
-}
-
-
-echo "hello! ".$settingsLayout;
 ?>

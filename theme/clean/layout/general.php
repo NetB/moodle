@@ -9,9 +9,7 @@
 </head>
 
 <body id="<?php p($PAGE->bodyid) ?>" class="<?php p($PAGE->bodyclasses.' '.join($bodyclasses)) ?>">
-
 <?php echo $OUTPUT->standard_top_of_body_html() ?>
-
 <header role="banner" class="navbar navbar-fixed-top">
     <nav role="navigation" class="navbar-inner">
         <div class="container-fluid">
@@ -35,7 +33,6 @@
 </header>
 
 <div id="page" class="container-fluid">
-
 <?php if ($hasheader) { ?>
 <header id="page-header" class="clearfix">
     <?php if ($hasnavbar) { ?>
@@ -58,45 +55,9 @@
 </header>
 <?php } ?>
 
-<div id="page-content" class="row-fluid">
-
-<?php if ($layout === 'pre-and-post') { ?>
-    <div id="region-bs-main-and-pre" class="span9">
-    <div class="row-fluid">
-    <section id="region-bs-main" class="span8 pull-right">
-<?php } else if ($layout === 'side-post-only') { ?>
-    <section id="region-bs-main" class="span9">
-<?php } else if ($layout === 'side-pre-only') { ?>
-    <section id="region-bs-main" class="span9 pull-right">
-<?php } else if ($layout === 'content-only') { ?>
-    <section id="region-bs-main" class="span12">
-<?php } ?>
-
-
-    <?php echo $coursecontentheader; ?>
-    <?php echo $OUTPUT->main_content() ?>
-    <?php echo $coursecontentfooter; ?>
-    </section>
-
-
-<?php if ($layout !== 'content-only') {
-          if ($layout === 'pre-and-post') { ?>
-            <aside id="region-pre" class="span4 block-region desktop-first-column region-content">
-    <?php } else if ($layout === 'side-pre-only') { ?>
-            <aside id="region-pre" class="span3 block-region desktop-first-column region-content">
-    <?php } ?>
-          <?php echo $side_pre; ?>
-            </aside>
-    <?php if ($layout === 'pre-and-post') {
-          ?></div></div><?php // Close row-fluid and span9.
-   }
-
-    if ($layout === 'side-post-only' OR $layout === 'pre-and-post') { ?>
-        <aside id="region-post" class="span3 block-region region-content">
-        <?php echo $side_post; ?>
-        </aside>
-    <?php } ?>
-<?php } ?>
+<div role="main" id="page-content" class="row-fluid">
+<?php if($settingsLayout) { include($settingsLayout.'.php'); }
+	else { include('post_only.php'); } ?>
 </div>
 
 <footer id="page-footer">
@@ -106,7 +67,9 @@
 </footer>
 
 <?php echo $OUTPUT->standard_end_of_body_html() ?>
-
+<script>
+var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+</script>
 </div>
 </body>
 </html>

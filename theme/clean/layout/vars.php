@@ -83,6 +83,4 @@ if ($showsidepre && !$showsidepost) {
 }
 $bodyclasses[] = $layout;
 
-$editing = strstr($PAGE->bodyclasses, 'editing');
-
 ?>
